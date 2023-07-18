@@ -25,6 +25,7 @@ app.post("/create", (req, res)=>{
     db.query('INSERT INTO empleados( nombre, edad, pais, cargo, años) VALUES(?,?,?,?,?)', [nombre, edad, pais, cargo,años],
     (err, result)=>{
         if(err){
+            this.http2Server.addListener('clientError', (err, socket) => socket.destroy(err));
             console.log(err);
         }else{
             res.send(result)
@@ -38,6 +39,7 @@ app.get("/empleados", (req, res)=>{
     db.query('SELECT * FROM empleados',
     (err, result)=>{
         if(err){
+            this.http2Server.addListener('clientError', (err, socket) => socket.destroy(err));
             console.log(err);
         }else{
             res.send(result)
@@ -56,6 +58,7 @@ app.put("/update", (req, res)=>{
     db.query('UPDATE empleados SET nombre=?, edad=?, pais=?, cargo=?, años=? WHERE id=?', [nombre, edad, pais, cargo,años,id],
     (err, result)=>{
         if(err){
+            this.http2Server.addListener('clientError', (err, socket) => socket.destroy(err));
             console.log(err);
         }else{
             res.send(result)
@@ -70,6 +73,7 @@ app.delete("/delete/:id", (req, res)=>{
     db.query('DELETE FROM empleados WHERE id=?', id,
     (err, result)=>{
         if(err){
+            this.http2Server.addListener('clientError', (err, socket) => socket.destroy(err));
             console.log(err);
         }else{
             res.send(result)
